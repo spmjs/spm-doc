@@ -1,0 +1,1 @@
+var nico = require('nico');
