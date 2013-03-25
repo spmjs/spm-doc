@@ -1,7 +1,7 @@
 {
   "name": "spm-doc",
   "description": "A documentation generator.",
-  "version": "0.1.0",
+  "version": "0.1.0a1",
   "homepage": "https://github.com/spmjs/spm-doc",
   "repository": {
     "type": "git",
@@ -12,12 +12,14 @@
   },
   "licenses": [
     {
-      "type": "MIT",
-      "url": "https://github.com/spmjs/spm-doc/blob/master/LICENSE-MIT"
+      "type": "MIT"
     }
   ],
   "dependencies": {
-    "nico": "~0.3.0"
+    "nico": "~0.3.0a2",
+    "colorful": "~2.0.3",
+    "spmrc": "~0.1.2",
+    "commander": "~1.1.1"
   },
   "bin": {
     "spm-doc": "bin/spm-doc"
