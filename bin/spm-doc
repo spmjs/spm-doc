@@ -9,7 +9,6 @@ commander.version(require('../package').version);
 commander
   .option('-s, --source <spmjs>', 'source for publishing')
   .option('-p, --port <8000>', 'local server port, default 8000')
-  .option('-v, --verbose', 'show more logs')
   .option('clean', 'clean _site folder')
   .option('build', 'build documentation')
   .option('server', 'start a server for documentation')
@@ -31,13 +30,5 @@ commander.on('--help', function() {
 });
 
 commander.parse(process.argv);
-
-var subcmd = commander.args[0];
-
-if (!subcmd) {
-  process.stdout.write(commander.helpInformation());
-  commander.emit('--help');
-  process.exit();
-}
 
 doc(commander);

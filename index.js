@@ -1,8 +1,8 @@
-var fs = require('fs');
-var nico = require('nico');
+var path = require('path');
+var spmrc = require('spmrc');
 var spawn = require('win-spawn');
 var DOC_PATH = '_site';
-var pkg = JSON.parse(fs.readFileSync('./package.json'));
+var theme = getTheme();
 
 try {
   var spm = require('spm');
@@ -20,13 +20,41 @@ module.exports = function(options) {
   }
 
   if (options.build) {
-    
+    spawn('nico', ['build', '-C', theme], { stdio: 'inherit'});
   }
 
-  if (options.server) {}
+  if (options.server || options.watch) {
+    options.port = options.port || '8000';
+    console.log(options.port);
+    spawn('nico', ['server', '-C', theme, options.watch && '--watch', '--port', options.port], { stdio: 'inherit'});    
+  }
 
-  if (options.watch) {}
-
-  if (options.publish) {}
+  if (options.publish) {
+    spawn('spm', ['publish', '--doc', DOC_PATH], { stdio: 'inherit'});  
+  }
 
 };
+
+
+function getTheme() {
+  var pkg = require(path.resolve('package.json'));
+  var theme = 'alice';
+
+  if (pkg.family !== 'alice') {
+    // output 中全是样式才用 alice
+    var output = pkg.spm.output;
+    if (output) {
+      for (var i in output) {
+        var f = output[i];
+        if (!/\.(css|stylus|less)$/.test(f)) {
+          theme = 'arale';
+          break;
+        }
+      }
+    }
+  }
+  return path.join(
+    spmrc.get('user.home'),
+    '.spm/themes/' + theme + '/nico.js'
+  );
+}
