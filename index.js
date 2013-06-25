@@ -16,21 +16,24 @@ var spmrc = require('spmrc');
 module.exports = function(options) {
   
   if (options.clean) {
-    spawn('rm', ['-rf', DOC_PATH], { stdio: 'inherit'});
+    cleanDoc();
   }
 
   if (options.build) {
-    spawn('nico', ['build', '-C', theme], { stdio: 'inherit'});
+    buildDoc();
   }
 
   if (options.server || options.watch) {
     options.port = options.port || '8000';
-    console.log(options.port);
-    spawn('nico', ['server', '-C', theme, options.watch && '--watch', '--port', options.port], { stdio: 'inherit'});    
+    spawn('nico', ['server', '-C', theme,
+      options.watch && '--watch', '--port', options.port], { stdio: 'inherit'});    
   }
 
   if (options.publish) {
-    spawn('spm', ['publish', '--doc', DOC_PATH], { stdio: 'inherit'});  
+    cleanDoc();
+    buildDoc();
+    spawn('spm', ['publish', '--doc', DOC_PATH,
+      '-s', options.source || 'default'], { stdio: 'inherit'});  
   }
 
 };
@@ -57,4 +60,12 @@ function getTheme() {
     spmrc.get('user.home'),
     '.spm/themes/' + theme + '/nico.js'
   );
+}
+
+function cleanDoc() {
+  spawn('rm', ['-rf', DOC_PATH], { stdio: 'inherit'});  
+}
+
+function buildDoc() {
+  spawn('nico', ['build', '-C', theme], { stdio: 'inherit'});   
 }
