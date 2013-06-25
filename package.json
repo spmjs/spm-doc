@@ -1,7 +1,7 @@
 {
   "name": "spm-doc",
   "description": "A documentation generator.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/spmjs/spm-doc",
   "repository": {
     "type": "git",
