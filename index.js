@@ -16,11 +16,15 @@ var spmrc = require('spmrc');
 module.exports = function(options) {
   
   if (options.clean) {
-    cleanDoc();
+    runCommands([
+      cleanDoc()
+    ])();
   }
 
   if (options.build) {
-    buildDoc();
+    runCommands([
+      buildDoc()
+    ])();
   }
 
   if (options.server || options.watch) {
@@ -30,10 +34,11 @@ module.exports = function(options) {
   }
 
   if (options.publish) {
-    cleanDoc();
-    buildDoc();
-    spawn('spm', ['publish', '--doc', DOC_PATH,
-      '-s', options.source || 'default'], { stdio: 'inherit'});  
+    runCommands([
+      cleanDoc(),
+      buildDoc(),
+      'spm publish --doc ' + DOC_PATH + ' -s ' + (options.source || 'default')
+    ])();
   }
 
 };
@@ -63,9 +68,47 @@ function getTheme() {
 }
 
 function cleanDoc() {
-  spawn('rm', ['-rf', DOC_PATH], { stdio: 'inherit'});  
+  return 'rm -rf ' + DOC_PATH;
 }
 
 function buildDoc() {
-  spawn('nico', ['build', '-C', theme], { stdio: 'inherit'});   
+  return 'nico build -C ' + theme;
 }
+
+// Run command synchronously
+// Example:
+//   runCommands([
+//     'touch a',
+//     'rm a'
+//   ])(done)
+//
+function runCommands(cmds) {
+  return function(callback) {
+    callback = callback || function() {};
+    if (!cmds.length) {
+      callback();
+      return;
+    }
+
+    var cmd = cmds[0], output, out;
+    var index = cmd.indexOf('>');
+    if (index > -1) {
+      output = cmd.substring(index + 1).replace(/(^\s+|\s+$)/g, '');
+      cmd = cmd.substring(0, index).split(/\s+/);
+    } else {
+      cmd = cmd.split(/\s+/);
+    }
+
+    if (output) {
+      out = fs.openSync(path.resolve(output), 'w');
+    }
+
+    spawn(cmd[0], cmd.slice(1), {stdio: [
+      process.stdin,
+      out ? out : process.stdout,
+      process.stderr
+    ]}).on('close', function() {
+      runCommands(cmds.slice(1))(callback);
+    });
+  };
+};
