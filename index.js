@@ -45,22 +45,23 @@ module.exports = function(options) {
 
 
 function getTheme() {
-  var pkg = require(path.resolve('package.json'));
-  var theme = 'alice';
+  var theme = (function getTheme() {
 
-  if (pkg.family !== 'alice') {
+    var pkg = require(path.resolve('package.json'));
+    if (pkg.family === 'alice') return 'alice';
     // output 中全是样式才用 alice
     var output = pkg.spm.output;
     if (output) {
       for (var i in output) {
         var f = output[i];
-        if (!/\.(css|stylus|less)$/.test(f)) {
-          theme = 'arale';
-          break;
-        }
+        if (!/\.(css|stylus|less)$/.test(f)) return 'arale';
       }
+    } else {
+      return 'arale';
     }
-  }
+    return 'alice';
+
+  })();
   return path.join(
     spmrc.get('user.home'),
     '.spm/themes/' + theme + '/nico.js'
