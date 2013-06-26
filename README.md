@@ -48,3 +48,10 @@ Install a theme:
 
     - https://github.com/aralejs/template-arale
     - https://github.com/aralejs/template-alice
+
+## Changelog
+
+### 0.2.1
+
+- Fix the sync execute problem.
+- Fix the theme choosing logic.
