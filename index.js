@@ -2,6 +2,7 @@ var path = require('path');
 var spmrc = require('spmrc');
 var spawn = require('win-spawn');
 var DOC_PATH = '_site';
+var pkg;
 
 try {
   var spm = require('spm');
@@ -15,7 +16,7 @@ var spmrc = require('spmrc');
 module.exports = function(options) {
 
   try {
-    var pkg = require(path.resolve('package.json'));
+    pkg = require(path.resolve('package.json'));
     pkg.spm.output;
   } catch(e) {
     console.log(  'Check if package.json and "spm" key existed.');
