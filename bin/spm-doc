@@ -33,13 +33,11 @@ commander.on('--help', function() {
   console.log('    $ spm doc publish -s alipay');
 });
 
-if (!process.argv[2]) {
-  process.stdout.write(commander.helpInformation());
-  commander.emit('--help');
-  process.exit();
-}
-
 commander.parse(process.argv);
+
+if (!process.argv[2]) {
+  commander.help();
+}
 
 console.log()
 
