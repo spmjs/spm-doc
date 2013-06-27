@@ -38,7 +38,7 @@ module.exports = function(options) {
 
   if (options.server || options.watch) {
     options.port = options.port || '8000';
-    spawn('nico', ['server', '-C', theme,
+    spawn('nico', ['server', '-C', themePath,
       options.watch && '--watch', '--port', options.port], { stdio: 'inherit'});    
   }
 
