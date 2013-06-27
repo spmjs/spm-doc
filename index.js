@@ -1,7 +1,8 @@
 var path = require('path');
 var spmrc = require('spmrc');
 var spawn = require('win-spawn');
-var DOC_PATH = '_site', pkg, themePath;
+var nico = require('nico');
+var DOC_PATH = '_site', pkg;
 
 try {
   var spm = require('spm');
@@ -12,7 +13,7 @@ try {
 var grunt = require('spm-grunt');
 var spmrc = require('spmrc');
 
-module.exports = function(options) {
+module.exports = function(commander) {
 
   try {
     pkg = require(path.resolve('package.json'));
@@ -22,32 +23,28 @@ module.exports = function(options) {
     process.exit();
   }
 
-  themePath = getThemePath();
+  commander.config = getThemePath();
 
-  if (options.clean) {
-    runCommands([
-      cleanDoc()
-    ])();
+  if (commander.clean) {
+    cleanDoc();
   }
 
-  if (options.build) {
-    runCommands([
-      buildDoc()
-    ])();
+  if (commander.build) {
+    nico.build(commander);
   }
 
-  if (options.server || options.watch) {
-    options.port = options.port || '8000';
-    spawn('nico', ['server', '-C', themePath,
-      options.watch && '--watch', '--port', options.port], { stdio: 'inherit'});    
+  if (commander.server || commander.watch) {
+    commander.port = commander.port || 8000;
+    nico.server(commander);
   }
 
-  if (options.publish) {
-    runCommands([
-      cleanDoc(),
-      buildDoc(),
-      'spm publish --doc ' + DOC_PATH + ' -s ' + (options.source || 'default')
-    ])();
+  if (commander.publish) {
+    // spm 和 nico 同时用到了 source ，这里只给 spm 用
+    var source = commander.source || 'default';
+    commander.source = '';
+    cleanDoc();
+    nico.build(commander);
+    spawn('spm', ['publish', '--doc', DOC_PATH, '-s', source], {stdio: 'inherit'});
   }
 
 };
@@ -74,47 +71,5 @@ function getThemePath() {
 }
 
 function cleanDoc() {
-  return 'rm -rf ' + DOC_PATH;
+  spawn('rm', ['-rf',DOC_PATH]);
 }
-
-function buildDoc() {
-  return 'nico build -C ' + themePath;
-}
-
-// Run command synchronously
-// Example:
-//   runCommands([
-//     'touch a',
-//     'rm a'
-//   ])(done)
-//
-function runCommands(cmds) {
-  return function(callback) {
-    callback = callback || function() {};
-    if (!cmds.length) {
-      callback();
-      return;
-    }
-
-    var cmd = cmds[0], output, out;
-    var index = cmd.indexOf('>');
-    if (index > -1) {
-      output = cmd.substring(index + 1).replace(/(^\s+|\s+$)/g, '');
-      cmd = cmd.substring(0, index).split(/\s+/);
-    } else {
-      cmd = cmd.split(/\s+/);
-    }
-
-    if (output) {
-      out = fs.openSync(path.resolve(output), 'w');
-    }
-
-    spawn(cmd[0], cmd.slice(1), {stdio: [
-      process.stdin,
-      out ? out : process.stdout,
-      process.stderr
-    ]}).on('close', function() {
-      runCommands(cmds.slice(1))(callback);
-    });
-  };
-};
