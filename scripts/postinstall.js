@@ -3,6 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var spawn = require('win-spawn');
+var semver = require('semver');
 
 try {
   var spm = require('spm');
@@ -33,5 +34,5 @@ function installModule(module, version) {
     } catch(e) {}
   }
   console.log('  Installing npm module ' + module + '@' + version);  
-  spawn('npm', ['install', module, '-g'], {stdio: 'inherit'});
+  spawn('npm', ['install', module, '-g --slient'], {stdio: 'inherit'});
 }
