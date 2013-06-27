@@ -1,8 +1,7 @@
 var path = require('path');
 var spmrc = require('spmrc');
 var spawn = require('win-spawn');
-var DOC_PATH = '_site';
-var pkg;
+var DOC_PATH = '_site', pkg, themePath;
 
 try {
   var spm = require('spm');
@@ -23,7 +22,7 @@ module.exports = function(options) {
     process.exit();
   }
 
-  var theme = getTheme();
+  themePath = getThemePath();
 
   if (options.clean) {
     runCommands([
@@ -53,9 +52,8 @@ module.exports = function(options) {
 
 };
 
-
-function getTheme() {
-  var theme = (function getTheme() {
+function getThemePath() {
+  var theme = (function () {
     if (pkg.family === 'alice') return 'alice';
     // output 中全是样式才用 alice
     var output = pkg.spm.output;
@@ -80,7 +78,7 @@ function cleanDoc() {
 }
 
 function buildDoc() {
-  return 'nico build -C ' + theme;
+  return 'nico build -C ' + themePath;
 }
 
 // Run command synchronously
