@@ -3,7 +3,7 @@
 var commander = require('commander');
 var doc = require('..');
 
-commander.usage('command [options]');
+commander.usage('[options]');
 commander.version(require('../package').version);
 
 commander
@@ -20,7 +20,7 @@ commander
 
 commander.on('--help', function() {
   console.log();
-  console.log('  Examples:');
+  console.log('  Examples:'.bold.blue);
   console.log();
   console.log('    $ spm doc');
   console.log('    $ spm doc clean');
