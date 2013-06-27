@@ -2,7 +2,6 @@ var path = require('path');
 var spmrc = require('spmrc');
 var spawn = require('win-spawn');
 var DOC_PATH = '_site';
-var theme = getTheme();
 
 try {
   var spm = require('spm');
@@ -14,7 +13,17 @@ var grunt = require('spm-grunt');
 var spmrc = require('spmrc');
 
 module.exports = function(options) {
-  
+
+  try {
+    var pkg = require(path.resolve('package.json'));
+    pkg.spm.output;
+  } catch(e) {
+    console.log(  'Check if package.json and "spm" key existed.');
+    process.exit();
+  }
+
+  var theme = getTheme();
+
   if (options.clean) {
     runCommands([
       cleanDoc()
@@ -46,8 +55,6 @@ module.exports = function(options) {
 
 function getTheme() {
   var theme = (function getTheme() {
-
-    var pkg = require(path.resolve('package.json'));
     if (pkg.family === 'alice') return 'alice';
     // output 中全是样式才用 alice
     var output = pkg.spm.output;
@@ -60,7 +67,6 @@ function getTheme() {
       return 'arale';
     }
     return 'alice';
-
   })();
   return path.join(
     spmrc.get('user.home'),
