@@ -51,7 +51,10 @@ module.exports = function(commander) {
 
 function getThemePath() {
   var theme = (function () {
-    if (pkg.family === 'alice') return 'alice';
+    // 名称若恰好为 stylib ，强制使用 alice 模板
+    if (pkg.family === 'alice' || pkg.name === 'stylib') {
+      return 'alice';
+    }
     // output 中全是样式才用 alice
     var output = pkg.spm.output;
     if (output) {
