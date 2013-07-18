@@ -51,6 +51,10 @@ Install a theme:
 
 ## Changelog
 
+### 0.2.7
+
+- nico 0.4.3 
+
 ### 0.2.1
 
 - Fix the sync execute problem.
