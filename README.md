@@ -51,6 +51,11 @@ Install a theme:
 
 ## Changelog
 
+### 0.2.8
+
+- remove spm-grunt
+- nico 0.4.4
+
 ### 0.2.7
 
 - nico 0.4.3 

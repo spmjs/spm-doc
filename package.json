@@ -1,7 +1,7 @@
 {
   "name": "spm-doc",
   "description": "A documentation generator.",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "homepage": "https://github.com/spmjs/spm-doc",
   "repository": {
     "type": "git",
@@ -16,10 +16,10 @@
     }
   ],
   "dependencies": {
-    "nico": "~0.4.3",
+    "nico": "~0.4.4",
     "colorful": "~2.1.0",
     "spmrc": "~0.1.2",
-    "win-spawn": "~1.1.0",    
+    "win-spawn": "~1.1.0",
     "commander": "~1.1.1",
     "semver": "~1.1.4"
   },
