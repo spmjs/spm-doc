@@ -10,7 +10,6 @@ try {
   console.log(' You need install spm first');
   process.exit(2);
 }
-var grunt = require('spm-grunt');
 var spmrc = require('spmrc');
 
 module.exports = function(commander) {
