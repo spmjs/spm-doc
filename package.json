@@ -16,9 +16,9 @@
     }
   ],
   "dependencies": {
-    "nico": "~0.4.4",
+    "nico": "~0.4.6",
     "colorful": "~2.1.0",
-    "spmrc": "~0.1.2",
+    "spmrc": "~0.1.3",
     "win-spawn": "~1.1.0",
     "commander": "~1.1.1",
     "semver": "~1.1.4"
