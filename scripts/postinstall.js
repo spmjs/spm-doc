@@ -16,3 +16,7 @@ try {
   console.log();
 }
 
+var gitInstall = require('../lib/helper').gitInstall;
+
+// install nico-cmd theme
+gitInstall('git://github.com/spmjs/nico-cmd.git', '~/.spm/themes/cmd');

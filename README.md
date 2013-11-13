@@ -1,6 +1,6 @@
 # spm-doc
 
-> A documentation generator.
+> A CMD module documentation generator.
 
 -----
 
@@ -42,14 +42,14 @@ The default theme path is `~/.spm/themes`.
 
 Install a theme:
 
-    git clone git://github.com/aralejs/template-arale.git ~/.spm/themes/arale
+    git clone git://github.com/spmjs/nico-cmd.git ~/.spm/themes/cmd
 
-## Available themes
-
-    - https://github.com/aralejs/template-arale
-    - https://github.com/aralejs/template-alice
 
 ## Changelog
+
+### 0.3.0
+
+- use CMD theme as default theme
 
 ### 0.2.8
 
@@ -58,7 +58,7 @@ Install a theme:
 
 ### 0.2.7
 
-- nico 0.4.3 
+- nico 0.4.3
 
 ### 0.2.1
 

@@ -49,26 +49,9 @@ module.exports = function(commander) {
 };
 
 function getThemePath() {
-  var theme = (function () {
-    // 名称若恰好为 stylib ，强制使用 alice 模板
-    if (pkg.family === 'alice' || pkg.name === 'stylib') {
-      return 'alice';
-    }
-    // output 中全是样式才用 alice
-    var output = pkg.spm.output;
-    if (output) {
-      for (var i in output) {
-        var f = output[i];
-        if (!/\.(css|stylus|less)$/.test(f)) return 'arale';
-      }
-    } else {
-      return 'arale';
-    }
-    return 'alice';
-  })();
   return path.join(
     spmrc.get('user.home'),
-    '.spm/themes/' + theme + '/nico.js'
+    '.spm/themes/cmd/nico.js'
   );
 }
 
