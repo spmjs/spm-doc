@@ -44,6 +44,7 @@ Install a theme:
 
     git clone git://github.com/spmjs/nico-cmd.git ~/.spm/themes/cmd
 
+> The default theme [nico-cmd](https://github.com/spmjs/nico-cmd) would be installed when spm-doc is installed.
 
 ## Changelog
 
