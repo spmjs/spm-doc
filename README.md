@@ -46,6 +46,10 @@ Install a theme:
 
 > The default theme [nico-cmd](https://github.com/spmjs/nico-cmd) would be installed when spm-doc is installed.
 
+## How to write a document
+
+Follow the instruction in [nico-cmd](https://github.com/spmjs/nico-cmd).
+
 ## Changelog
 
 ### 0.3.0
