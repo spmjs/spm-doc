@@ -27,8 +27,8 @@ commander.on('--help', function() {
   console.log('    $ spm doc build');
   console.log('    $ spm doc build -f');
   console.log('    $ spm doc server');
-  console.log('    $ spm doc watch');  
-  console.log('    $ spm doc watch --port 8080');  
+  console.log('    $ spm doc watch');
+  console.log('    $ spm doc watch --port 8080');
   console.log('    $ spm doc publish');
   console.log('    $ spm doc publish -s alipay');
 });

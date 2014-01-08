@@ -12,7 +12,12 @@ try {
 }
 var spmrc = require('spmrc');
 
-module.exports = function(commander) {
+module.exports = function(commander, callback) {
+
+  var log = require('nico/lib/sdk/log');
+  log.config(commander);
+
+  callback = callback || function() {};
 
   try {
     pkg = require(path.resolve('package.json'));
@@ -29,12 +34,12 @@ module.exports = function(commander) {
   }
 
   if (commander.build) {
-    nico.build(commander);
+    nico.build(commander, callback);
   }
 
   if (commander.server || commander.watch) {
     commander.port = commander.port || 8000;
-    nico.server(commander);
+    nico.server(commander, callback);
   }
 
   if (commander.publish) {
@@ -43,7 +48,7 @@ module.exports = function(commander) {
     commander.source = '';
     cleanDoc();
     nico.build(commander);
-    spawn('spm', ['publish', '--doc', DOC_PATH, '-s', source], {stdio: 'inherit'});
+    spawn('spm', ['publish', '--doc', DOC_PATH, '-s', source], { stdio: 'inherit' });
   }
 
 };
@@ -56,5 +61,5 @@ function getThemePath() {
 }
 
 function cleanDoc() {
-  spawn('rm', ['-rf',DOC_PATH]);
+  spawn('rm', ['-rf', DOC_PATH]);
 }
