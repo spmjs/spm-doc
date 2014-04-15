@@ -2,6 +2,7 @@
 
 var commander = require('commander');
 var doc = require('..');
+require('colorful').toxic()
 
 commander.usage('[options]');
 commander.version(require('../package').version);
@@ -37,8 +38,9 @@ commander.parse(process.argv);
 
 if (!process.argv[2]) {
   commander.help();
+  console.log();
 }
 
-console.log()
+console.log();
 
 doc(commander);
