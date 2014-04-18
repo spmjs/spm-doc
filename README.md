@@ -52,6 +52,16 @@ Follow the instruction in [nico-cmd](https://github.com/spmjs/nico-cmd).
 
 ## Changelog
 
+### 0.3.2
+
+- fixed missing color in cli
+- fixed #5
+- update nico version
+
+### 0.3.1
+
+- add callback argument
+
 ### 0.3.0
 
 - use CMD theme as default theme
