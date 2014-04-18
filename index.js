@@ -39,7 +39,7 @@ module.exports = function(commander, callback) {
 
   if (commander.server || commander.watch) {
     commander.port = commander.port || 8000;
-    nico.server(commander, callback);
+    nico.server(commander);
   }
 
   if (commander.publish) {
