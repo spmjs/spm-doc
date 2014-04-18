@@ -15,6 +15,7 @@ var spmrc = require('spmrc');
 module.exports = function(commander, callback) {
 
   var log = require('nico/lib/sdk/log');
+  commander.color = true;
   log.config(commander);
 
   callback = callback || function() {};
